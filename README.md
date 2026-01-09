@@ -31,23 +31,46 @@ a possible valid segmentation.
 Follow-up: If multiple valid segmentations exist, how would you return all possible
 combinations?
 
+
+For video editing and colaboration
+
+https://www.canva.com/design/DAG9pnhrKgI/0BwCOaRXhNGhUCg7RnkdIw/edit?utm_content=DAG9pnhrKgI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
+For the system design documentation
+
+https://www.canva.com/design/DAG9pmkfFoA/c6LU7PRDcUJ5T-XL1Ns8Rg/edit?utm_content=DAG9pmkfFoA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 ## Overview
 ### Running the project
+python -m venv .venv
+Set-ExecutionPolicy Unrestricted -Scope Process
+.venv\Scripts\activate
+python -m pip install -U pip
+pip install pandas scikit-learn datasets transformers evaluate fastapi uvicorn "uvicorn[standard]"
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+
+### Combining the csv
+python merger.py
+
+### Spliting the csv
+python chunker.py
+
+### Training the model (Best with nividia gpu)
+Check if you have it detected:
+nividia-smi
+Check if torch supports gpu:
+python model.py
+Training the model:
+pytohn train_model.py --csv Reviews.csv
+
+### Runnning the app
+uvicorn app:app --reload
+Visit http://127.0.0.1:8000
+
+
 ### How it works
 
 We adopted a three-class sentiment formulation (negative, neutral, positive) to preserve the original rating semantics and to better support sliding-window sentiment analysis, where neutral sentences play an important role in modelling contextual transitions.
 
 ### License
 MIT — free to use and adapt with attribution.
-45 47 52 52 53 55 56 58 62
-
-python -m venv .venv
-Set-ExecutionPolicy Unrestricted -Scope Process
-.venv\Scripts\activate
-python -m pip install -U pip
-
-pip install pandas scikit-learn datasets transformers evaluate fastapi uvicorn "uvicorn[standard]"
-
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
-
-uvicorn app:app --reload
