@@ -1,4 +1,3 @@
-# Use slim Python base image
 FROM python:3.11-slim
 
 # Prevent Python from writing .pyc and enable unbuffered logs
