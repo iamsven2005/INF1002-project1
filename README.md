@@ -74,3 +74,5 @@ We adopted a three-class sentiment formulation (negative, neutral, positive) to 
 
 ### License
 MIT — free to use and adapt with attribution.
+
+docker build -t welcome-to-docker .

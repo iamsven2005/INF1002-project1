@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+.git/
+.gitignore
+.DS_Store
+*.log
+
+# If you have large training artifacts you don't need
+# (BUT keep food_sentiment_model/)
+outputs/
+checkpoints/
