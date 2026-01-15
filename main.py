@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import os
-
 from transformers import pipeline
 
 MODEL_DIR = "./food_sentiment_model"
