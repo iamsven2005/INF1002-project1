@@ -9,8 +9,5 @@ venv/
 .gitignore
 .DS_Store
 *.log
-
-# If you have large training artifacts you don't need
-# (BUT keep food_sentiment_model/)
 outputs/
 checkpoints/
