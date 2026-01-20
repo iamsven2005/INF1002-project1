@@ -1,7 +1,6 @@
 # FastAPI web framework
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-
 # Pydantic for request validation
 from pydantic import BaseModel
 
