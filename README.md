@@ -67,7 +67,6 @@ pytohn train_model.py --csv Reviews.csv
 uvicorn app:app --reload
 Visit http://127.0.0.1:8000
 
-
 ### How it works
 
 We adopted a three-class sentiment formulation (negative, neutral, positive) to preserve the original rating semantics and to better support sliding-window sentiment analysis, where neutral sentences play an important role in modelling contextual transitions.
