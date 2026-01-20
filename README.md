@@ -1,4 +1,5 @@
 # Sentiment Analysis System LAB-P1 - 9
+
 ## About the project
 ### Objective
 The goal of this project is to design and implement a sentiment analysis system based
