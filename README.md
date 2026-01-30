@@ -84,3 +84,5 @@ Added poltt graph
 Export csv
 Sensitive data checking
 Search table
+Added autocomplete
+Added streaming in of answers
