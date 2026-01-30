@@ -62,7 +62,7 @@ nividia-smi
 Check if torch supports gpu:
 python model.py
 Training the model:
-pytohn train_model.py --csv Reviews.csv
+python train_model.py --csv Reviews.csv
 
 ### Runnning the app
 uvicorn app:app --reload
@@ -76,3 +76,11 @@ We adopted a three-class sentiment formulation (negative, neutral, positive) to 
 MIT — free to use and adapt with attribution.
 
 docker build -t welcome-to-docker .
+
+
+Added most and least sentiment
+Added histroy
+Added poltt graph
+Export csv
+Sensitive data checking
+Search table

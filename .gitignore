@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 .DS_Store
 Reviews.csv
+predictions.sqlite
+predictions.sqlite-wal
+predictions.sqlite-shm
