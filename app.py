@@ -1053,7 +1053,7 @@ async function loadDbRows() {
 dbExport.addEventListener('click', () => {
   const limit = Number(dbLimit.value || 50);
   // Navigating to the CSV endpoint triggers a download
-  window.location.href = `/db/predictions.csv?limit=${limit}`;
+  window.location.href = `./db/predictions.csv?limit=${limit}`;
 });
 
   async function refreshServerLoad() {
@@ -1524,7 +1524,7 @@ document.addEventListener('keydown', (e) => {
     
     // Use SSE for streaming predictions - shows results as they're computed
     // This provides better UX for longer texts with multiple spans
-    const es = new EventSource(`/predict_spans_stream?text=${encodeURIComponent(text)}`);
+    const es = new EventSource(`./predict_spans_stream?text=${encodeURIComponent(text)}`);
     
     // Array to accumulate span results as they stream in
     const spans = [];
