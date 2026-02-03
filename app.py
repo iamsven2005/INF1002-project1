@@ -999,7 +999,7 @@ async function plotLatencyVsLength() {
   latLegend.textContent = "Loading…";
   try {
     const limit = Number(dbLimit.value || 50);
-    const res = await fetch(`/db/latency_vs_length?limit=${Math.max(50, limit)}`, { cache: 'no-store' });
+    const res = await fetch(`./db/latency_vs_length?limit=${Math.max(50, limit)}`, { cache: 'no-store' });
     const data = await res.json();
     if (!res.ok) throw new Error(data?.error || "Failed to fetch graph data");
 
@@ -1034,7 +1034,7 @@ async function loadDbRows() {
 
     try {
       const limit = Number(dbLimit.value || 50);
-      const res = await fetch(`/db/predictions?limit=${limit}`, { cache: 'no-store' });
+      const res = await fetch(`./db/predictions?limit=${limit}`, { cache: 'no-store' });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Failed to load DB rows");
 
@@ -1058,7 +1058,7 @@ dbExport.addEventListener('click', () => {
 
   async function refreshServerLoad() {
   try {
-    const res = await fetch('/server_load', { cache: 'no-store' });
+    const res = await fetch('./server_load', { cache: 'no-store' });
     const data = await res.json();
 
     // Format: HTTP in-flight, predictions in-flight, waiting queue
@@ -1094,7 +1094,7 @@ dbExport.addEventListener('click', () => {
     
     try {
       const limit = Number(wcLimit.value || 250);
-      const res = await fetch(`/word_cloud?limit=${limit}`, { cache: 'no-store' });
+      const res = await fetch(`./word_cloud?limit=${limit}`, { cache: 'no-store' });
       const data = await res.json();
       
       if (!res.ok) throw new Error(data?.error || "Failed to load word cloud");
@@ -1421,7 +1421,7 @@ document.addEventListener('keydown', (e) => {
     setStatus("Segmenting...");
     try {
       // Send text to backend for segmentation
-      const res = await fetch('/segment', {
+      const res = await fetch('./segment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text })
@@ -1743,7 +1743,7 @@ function drawLineChart(canvas, points) {
    * @returns {Promise<string[]>} Array of suggestion words
    */
   async function fetchAc(prefix) {
-    const res = await fetch(`/autocomplete?q=${encodeURIComponent(prefix)}&limit=8&window=500`, { cache: "no-store" });
+    const res = await fetch(`./autocomplete?q=${encodeURIComponent(prefix)}&limit=8&window=500`, { cache: "no-store" });
     const data = await res.json();
     if (!res.ok) throw new Error(data?.error || "Autocomplete failed");
     return data.suggestions || [];
