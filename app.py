@@ -18,6 +18,7 @@ from fastapi.responses import StreamingResponse
 from fastapi import FastAPI, Query, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 # === Standard Library ===
 from typing import List, Dict
@@ -36,8 +37,12 @@ from db import init_db, log_prediction, fetch_predictions, fetch_latency_vs_leng
 app = FastAPI(
     title="Food Review Sentiment App",
     description="Classifies food reviews by sentiment (positive/neutral/negative)",
-    version="1.0.0"
+    version="1.0.0",
+    root_path="/inf",
+    docs_url="/docs",
+    openapi_url="/openapi.json",
 )
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=["*"])
 
 
 # === Request/Response Schemas ===
@@ -924,6 +929,13 @@ function fmtTime(tsMs) {
 
 function rowToSearchString(row) {
   // Choose fields that make sense to search
+  // Include predicted label in text form for better searchability
+  const labelText = {
+    0: "negative",
+    1: "neutral",
+    2: "positive"
+  }[row.label] || row.label;
+  
   return [
     row.id,
     row.ts_ms,
@@ -931,6 +943,7 @@ function rowToSearchString(row) {
     row.text_len,
     row.text_sha256,
     row.label,
+    labelText,           // <- Add predicted label text (negative/neutral/positive)
     row.confidence,
     row.latency_ms,
     row.http_in_flight,
