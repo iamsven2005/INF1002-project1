@@ -999,7 +999,7 @@ async function plotLatencyVsLength() {
   latLegend.textContent = "Loading…";
   try {
     const limit = Number(dbLimit.value || 50);
-    const res = await fetch(`./db/latency_vs_length?limit=${Math.max(50, limit)}`, { cache: 'no-store' });
+    const res = await fetch(`./inf/db/latency_vs_length?limit=${Math.max(50, limit)}`, { cache: 'no-store' });
     const data = await res.json();
     if (!res.ok) throw new Error(data?.error || "Failed to fetch graph data");
 
@@ -1034,7 +1034,7 @@ async function loadDbRows() {
 
     try {
       const limit = Number(dbLimit.value || 50);
-      const res = await fetch(`./db/predictions?limit=${limit}`, { cache: 'no-store' });
+      const res = await fetch(`./inf/db/predictions?limit=${limit}`, { cache: 'no-store' });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Failed to load DB rows");
 
@@ -1053,12 +1053,12 @@ async function loadDbRows() {
 dbExport.addEventListener('click', () => {
   const limit = Number(dbLimit.value || 50);
   // Navigating to the CSV endpoint triggers a download
-  window.location.href = `./db/predictions.csv?limit=${limit}`;
+  window.location.href = `./inf/db/predictions.csv?limit=${limit}`;
 });
 
   async function refreshServerLoad() {
   try {
-    const res = await fetch('./server_load', { cache: 'no-store' });
+    const res = await fetch('./inf/server_load', { cache: 'no-store' });
     const data = await res.json();
 
     // Format: HTTP in-flight, predictions in-flight, waiting queue
@@ -1094,7 +1094,7 @@ dbExport.addEventListener('click', () => {
     
     try {
       const limit = Number(wcLimit.value || 250);
-      const res = await fetch(`./word_cloud?limit=${limit}`, { cache: 'no-store' });
+      const res = await fetch(`./inf/word_cloud?limit=${limit}`, { cache: 'no-store' });
       const data = await res.json();
       
       if (!res.ok) throw new Error(data?.error || "Failed to load word cloud");
@@ -1421,7 +1421,7 @@ document.addEventListener('keydown', (e) => {
     setStatus("Segmenting...");
     try {
       // Send text to backend for segmentation
-      const res = await fetch('./segment', {
+      const res = await fetch('./inf/segment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text })
@@ -1524,7 +1524,7 @@ document.addEventListener('keydown', (e) => {
     
     // Use SSE for streaming predictions - shows results as they're computed
     // This provides better UX for longer texts with multiple spans
-    const es = new EventSource(`./predict_spans_stream?text=${encodeURIComponent(text)}`);
+    const es = new EventSource(`./inf/predict_spans_stream?text=${encodeURIComponent(text)}`);
     
     // Array to accumulate span results as they stream in
     const spans = [];
@@ -1743,7 +1743,7 @@ function drawLineChart(canvas, points) {
    * @returns {Promise<string[]>} Array of suggestion words
    */
   async function fetchAc(prefix) {
-    const res = await fetch(`./autocomplete?q=${encodeURIComponent(prefix)}&limit=8&window=500`, { cache: "no-store" });
+    const res = await fetch(`./inf/autocomplete?q=${encodeURIComponent(prefix)}&limit=8&window=500`, { cache: "no-store" });
     const data = await res.json();
     if (!res.ok) throw new Error(data?.error || "Autocomplete failed");
     return data.suggestions || [];
