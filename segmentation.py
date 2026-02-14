@@ -2,7 +2,8 @@
 
 from typing import List
 from model import get_classifier
-
+import re
+import wordninja
 
 def segment_text(text: str) -> str:
     """Re-insert spaces into text that has had them removed using tokenizer.
@@ -24,45 +25,20 @@ def segment_text(text: str) -> str:
 
 
 def segment_text_all(text: str) -> List[str]:
-    """Find valid segmentations using HuggingFace tokenizer.
-    
-    Encodes text to tokens and decodes back with proper spacing.
-    The tokenizer handles subword tokens (unknown words) gracefully.
-    
-    Args:
-        text: Input text without spaces
-    
-    Returns:
-        List containing the tokenizer-decoded segmentation
-        Returns empty list if text cannot be processed
-    """
-    classifier = get_classifier()
-    if classifier is None:
-        return []
-    
     text = (text or "").strip()
     if not text:
         return []
-    
-    try:
-        # Get the tokenizer from the classifier pipeline
-        tokenizer = classifier.tokenizer
-        
-        # Encode the text (converts to token IDs)
-        # The tokenizer will split text into subwords intelligently
-        encoded = tokenizer.encode(text)
-        
-        # Decode back (converts token IDs back to text with proper spacing)
-        # skip_special_tokens=True removes [CLS], [SEP], etc.
-        decoded = tokenizer.decode(encoded, skip_special_tokens=True)
-        
-        # Return the decoded text as a single-element list
-        # This maintains API compatibility
-        if decoded and decoded.strip():
-            return [decoded.strip()]
+
+    # Keep punctuation, but segment the alphanumeric runs
+    parts = re.findall(r"[A-Za-z]+|[0-9]+|[^A-Za-z0-9\s]+", text)
+    out = []
+    for p in parts:
+        if p.isalpha():
+            out.extend(wordninja.split(p))
         else:
-            return []
-    
-    except Exception as e:
-        # If tokenizer fails, return empty list
-        return []
+            out.append(p)
+
+    # clean spacing before punctuation like "." "," "!" "?"
+    s = " ".join(out)
+    s = re.sub(r"\s+([.,!?;:])", r"\1", s)
+    return [s]

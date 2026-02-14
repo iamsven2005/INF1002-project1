@@ -1469,8 +1469,7 @@ document.addEventListener('keydown', (e) => {
     // Display each segmentation
     for (let i = 0; i < segmentations.length; i++) {
       const seg = segmentations[i];
-      const wordCount = seg.split(' ').length;
-      
+      const wordCount = seg.trim().split(/\s+/).filter(Boolean).length;
       const option = document.createElement("div");
       option.className = "segment-option";
       option.innerHTML = `
