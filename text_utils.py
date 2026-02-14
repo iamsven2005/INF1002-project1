@@ -71,3 +71,12 @@ def split_with_offsets(text: str) -> List[Dict]:
         parts.append({"text": seg, "start": seg_start, "end": seg_end})
 
     return parts
+
+
+def sliding_window_paragraph_sentiment(spans, window_size, score_fn):
+    windows = []
+    for i in range(len(spans) - window_size + 1):
+        window = spans[i:i + window_size]
+        score = sum(score_fn(s["text"]) for s in window)
+        windows.append({"start": i, "end": i + window_size - 1, "score": score, "spans": window})
+    return windows
