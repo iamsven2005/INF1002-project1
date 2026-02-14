@@ -164,3 +164,12 @@ def now_ms() -> int:
         floating point precision issues.
     """
     return int(time.time() * 1000)
+
+
+def sliding_window_paragraph_sentiment(spans, window_size, score_fn):
+    windows = []
+    for i in range(len(spans) - window_size + 1):
+        window = spans[i:i + window_size]
+        score = sum(score_fn(s["text"]) for s in window)
+        windows.append({"start": i, "end": i + window_size - 1, "score": score, "spans": window})
+    return windows
